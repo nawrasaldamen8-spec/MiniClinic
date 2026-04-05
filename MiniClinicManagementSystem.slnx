@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="MiniClinicManagementSystem.API/MiniClinicManagementSystem.API.csproj" />
+  <Project Path="MiniClinicManagementSystem.Core/MiniClinicManagementSystem.Core.csproj" />
+  <Project Path="MiniClinicManagementSystem.Infrastructure/MiniClinicManagementSystem.Infrastructure.csproj" />
+  <Project Path="MiniClinicManagementSystem.Services/MiniClinicManagementSystem.Services.csproj" />
+</Solution>
