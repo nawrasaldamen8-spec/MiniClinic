@@ -200,10 +200,6 @@ namespace MiniClinicManagementSystem.Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -289,7 +285,7 @@ namespace MiniClinicManagementSystem.Infrastructure.Migrations
                     b.ToTable("AvailabilitySlots", (string)null);
                 });
 
-            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.DoctorProfile", b =>
+            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.Doctor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -323,7 +319,7 @@ namespace MiniClinicManagementSystem.Infrastructure.Migrations
                     b.ToTable("DoctorProfiles", (string)null);
                 });
 
-            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.PatientProfile", b =>
+            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.Patient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -463,13 +459,13 @@ namespace MiniClinicManagementSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.Appointment", b =>
                 {
-                    b.HasOne("MiniClinicManagementSystem.Core.Entities.DoctorProfile", "DoctorProfile")
+                    b.HasOne("MiniClinicManagementSystem.Core.Entities.Doctor", "DoctorProfile")
                         .WithMany("Appointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MiniClinicManagementSystem.Core.Entities.PatientProfile", "PatientProfile")
+                    b.HasOne("MiniClinicManagementSystem.Core.Entities.Patient", "PatientProfile")
                         .WithMany("Appointments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -482,7 +478,7 @@ namespace MiniClinicManagementSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.AvailabilitySlot", b =>
                 {
-                    b.HasOne("MiniClinicManagementSystem.Core.Entities.DoctorProfile", "DoctorProfile")
+                    b.HasOne("MiniClinicManagementSystem.Core.Entities.Doctor", "DoctorProfile")
                         .WithMany("AvailabilitySlots")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -491,22 +487,22 @@ namespace MiniClinicManagementSystem.Infrastructure.Migrations
                     b.Navigation("DoctorProfile");
                 });
 
-            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.DoctorProfile", b =>
+            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.Doctor", b =>
                 {
                     b.HasOne("MiniClinicManagementSystem.Core.Entities.ApplicationUser", "ApplicationUser")
-                        .WithOne("DoctorProfile")
-                        .HasForeignKey("MiniClinicManagementSystem.Core.Entities.DoctorProfile", "ApplicationUserId")
+                        .WithOne()
+                        .HasForeignKey("MiniClinicManagementSystem.Core.Entities.Doctor", "ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.PatientProfile", b =>
+            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.Patient", b =>
                 {
                     b.HasOne("MiniClinicManagementSystem.Core.Entities.ApplicationUser", "ApplicationUser")
-                        .WithOne("PatientProfile")
-                        .HasForeignKey("MiniClinicManagementSystem.Core.Entities.PatientProfile", "ApplicationUserId")
+                        .WithOne()
+                        .HasForeignKey("MiniClinicManagementSystem.Core.Entities.Patient", "ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -535,13 +531,6 @@ namespace MiniClinicManagementSystem.Infrastructure.Migrations
                     b.Navigation("Appointment");
                 });
 
-            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.ApplicationUser", b =>
-                {
-                    b.Navigation("DoctorProfile");
-
-                    b.Navigation("PatientProfile");
-                });
-
             modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.Appointment", b =>
                 {
                     b.Navigation("Prescriptions");
@@ -549,14 +538,14 @@ namespace MiniClinicManagementSystem.Infrastructure.Migrations
                     b.Navigation("Review");
                 });
 
-            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.DoctorProfile", b =>
+            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.Doctor", b =>
                 {
                     b.Navigation("Appointments");
 
                     b.Navigation("AvailabilitySlots");
                 });
 
-            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.PatientProfile", b =>
+            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.Patient", b =>
                 {
                     b.Navigation("Appointments");
                 });

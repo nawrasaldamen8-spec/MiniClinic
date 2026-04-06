@@ -26,12 +26,7 @@ namespace MiniClinicManagementSystem.API.Handlers
             httpContext.Response.StatusCode = (int)statusCode;
             httpContext.Response.ContentType = "application/json";
 
-            var result = new Result<object>
-            {
-                IsSuccess = false,
-                Message = message,
-                Code = statusCode
-            };
+            var result = Result.Failure(message, statusCode);
 
             await httpContext.Response.WriteAsJsonAsync(result, cancellationToken);
 

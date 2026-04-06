@@ -1,12 +1,13 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MiniClinicManagementSystem.API.Handlers;
 using MiniClinicManagementSystem.Core.Entities;
 using MiniClinicManagementSystem.Core.Validations;
 using MiniClinicManagementSystem.Infrastructure.Data;
+using MiniClinicManagementSystem.Infrastructure.DependencyInjection;
+using MiniClinicManagementSystem.Services.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +42,17 @@ builder.Services.AddCors(options =>
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateAvailabilitySlotValidator>();
+
+builder.Services.AddRepositories();
+builder.Services.AddServices();
 var app = builder.Build();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+	await AppDbContext.SeedAsync(scope.ServiceProvider, dbContext);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -52,7 +63,7 @@ if (app.Environment.IsDevelopment())
 
 
 
-app.UseExceptionHandler();
+//app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthentication();

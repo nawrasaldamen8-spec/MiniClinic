@@ -2,7 +2,7 @@
 
 namespace MiniClinicManagementSystem.Core.Interfaces.IRepository
 {
-	public interface IAvailabilitySlotRepository : IGenericRepository<AvailabilitySlot>
+	public interface IDoctorRepository : IGenericRepository<Doctor>
 	{
 	}
 }

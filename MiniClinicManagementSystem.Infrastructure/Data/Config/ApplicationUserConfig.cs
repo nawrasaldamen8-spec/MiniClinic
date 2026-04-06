@@ -14,9 +14,6 @@ namespace MiniClinicManagementSystem.Infrastructure.Data.Config
                 .HasColumnType("datetime2")
                 .IsRequired();
 
-            builder.Property(x => x.Role)
-                .HasConversion<string>()
-                .IsRequired();
         }
     }
 }

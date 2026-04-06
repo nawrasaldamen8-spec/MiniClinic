@@ -1,66 +1,62 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MiniClinicManagementSystem.Core.Interfaces.IRepository.IGenericRepository;
+using Microsoft.EntityFrameworkCore.Storage;
+using MiniClinicManagementSystem.Core.Exceptions;
+using MiniClinicManagementSystem.Core.Interfaces.IRepository;
 using MiniClinicManagementSystem.Infrastructure.Data;
 using System.Linq.Expressions;
 
 namespace MiniClinicManagementSystem.Infrastructure.Repositories
 {
-    public class GenericRepository<T, TKey>(AppDbContext context) :
-        IReadableRepository<T, TKey>,
-        IAddableRepository<T>,
-        IUpdatableRepository<T>,
-        IDeletableRepository<T>,
-        IQueryableProviderRepository<T>,
-        ISavableRepository
-        where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected readonly AppDbContext _context = context;
-        protected readonly DbSet<T> _dbSet = context.Set<T>();
+		protected readonly AppDbContext _context;
+		protected readonly DbSet<T> _dbSet;
 
-        public virtual async Task<T> AddAsync(
-            T entity,
-            CancellationToken cancellationToken = default)
-        {
-            await _dbSet.AddAsync(entity, cancellationToken);
-            return entity;
-        }
+		public GenericRepository(AppDbContext context)
+		{
+			_context = context;
+			_dbSet = _context.Set<T>();
+		}
 
-        public async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
-        {
-            await _dbSet.AddRangeAsync(entities, cancellationToken);
-            return entities;
-        }
+		public async Task AddAsync(T entity) => await _dbSet.AddAsync(entity);
 
-        public void Delete(T entity) { _dbSet.Remove(entity); }
 
-        public void DeleteRange(IEnumerable<T> entities) { _dbSet.RemoveRange(entities); }
+		public IQueryable<T> GetQuery() => _dbSet;
 
-        public virtual async Task<IEnumerable<T>> FindAsync(
-            Expression<Func<T, bool>> predicate,
-            CancellationToken cancellationToken = default) 
-            => await _dbSet.Where(predicate).ToListAsync(cancellationToken);
 
-        public virtual async Task<T?> FirstOrDefaultAsync(
-            Expression<Func<T, bool>> predicate,
-            CancellationToken cancellationToken = default) 
-            => await _dbSet.FirstOrDefaultAsync(predicate, cancellationToken);
+		public async Task<T?> GetByIdAsync(int id) => await _dbSet.FindAsync(id);
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default) 
-            => await _dbSet.ToListAsync(cancellationToken);
 
-        public virtual async Task<T?> GetByIdAsync(TKey Id, CancellationToken cancellationToken = default) 
-            => await _dbSet.FindAsync([Id!], cancellationToken);
+		public void Update(T entity) => _dbSet.Update(entity);
 
-        public IQueryable<T> GetQueryable() 
-            => _dbSet.AsQueryable();
+		public async Task<bool> DeleteAsync(int id)
+		{
+			var entity = await _dbSet.FindAsync(id);
+			if (entity == null) return false;
 
-        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) 
-            => await _context.SaveChangesAsync(cancellationToken);
-        
+			_dbSet.Remove(entity);
+			return true;
+		}
 
-        public void Update(T entity) { _dbSet.Update(entity); }
+		public async Task SaveChangesAsync()
+		{
+			try
+			{
+				await _context.SaveChangesAsync();
+			}
+			catch (DbUpdateException)
+			{
+				throw new AppException(System.Net.HttpStatusCode.InternalServerError, "Database Error");
+			}
+		}
 
-        public void UpdateRange(IEnumerable<T> entities) { _dbSet.UpdateRange(entities); }
+		public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
+		{
+			return await _dbSet.AnyAsync(predicate);
+		}
 
-    }
+		public async Task<IDbContextTransaction> BeginTransactAsync()
+			=> await _context.Database.BeginTransactionAsync();
+
+	}
 }

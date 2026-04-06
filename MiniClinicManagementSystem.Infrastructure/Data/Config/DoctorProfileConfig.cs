@@ -4,9 +4,9 @@ using MiniClinicManagementSystem.Core.Entities;
 
 namespace MiniClinicManagementSystem.Infrastructure.Data.Config
 {
-    public class DoctorProfileConfig : IEntityTypeConfiguration<DoctorProfile>
+    public class DoctorProfileConfig : IEntityTypeConfiguration<Doctor>
     {
-        public void Configure(EntityTypeBuilder<DoctorProfile> builder)
+        public void Configure(EntityTypeBuilder<Doctor> builder)
         {
             builder.ToTable("DoctorProfiles");
             builder.HasKey(x => x.Id);
@@ -25,8 +25,8 @@ namespace MiniClinicManagementSystem.Infrastructure.Data.Config
                 .IsRequired();
           
             builder.HasOne(x => x.ApplicationUser)
-                   .WithOne(x => x.DoctorProfile)
-                   .HasForeignKey<DoctorProfile>(x => x.ApplicationUserId)
+                   .WithOne()
+                   .HasForeignKey<Doctor>(x => x.ApplicationUserId)
                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasIndex(x => x.ApplicationUserId)
