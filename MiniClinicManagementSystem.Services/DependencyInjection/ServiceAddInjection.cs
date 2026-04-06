@@ -1,0 +1,15 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using MiniClinicManagementSystem.Core.Interfaces.IServices;
+
+namespace MiniClinicManagementSystem.Services.DependencyInjection
+{
+	public static class ServiceAddInjection
+	{
+		public static IServiceCollection AddServices(this IServiceCollection services)
+		{
+
+			services.AddScoped<IAvailabilitySlotService, AvailabilitySlotService>();
+			return services;
+		}
+	}
+}
