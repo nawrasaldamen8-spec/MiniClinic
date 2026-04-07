@@ -43,11 +43,12 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateAvailabilitySlotValidator>();
 
+// Dependency Injection
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 var app = builder.Build();
 
-
+// Seed Data
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
