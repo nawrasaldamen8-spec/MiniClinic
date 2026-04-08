@@ -40,6 +40,7 @@ builder.Services.AddCors(options =>
 
 });
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateAvailabilitySlotValidator>();
 
@@ -63,8 +64,7 @@ if (app.Environment.IsDevelopment())
 }
 
 
-
-//app.UseExceptionHandler();
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthentication();

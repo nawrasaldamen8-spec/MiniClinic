@@ -9,26 +9,17 @@ namespace MiniClinicManagementSystem.API.Handlers
     {
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
-            HttpStatusCode statusCode;
-            string message;
-
-            if (exception is AppException appEx)
-            {
-                statusCode = appEx.StatusCode;
-                message = appEx.Message;
-            }
-            else
-            {
-                statusCode = HttpStatusCode.InternalServerError;
-                message = "Something went wrong"; 
-            }
+            var statusCode = exception is AppException apiException ? apiException.StatusCode : HttpStatusCode.InternalServerError;
 
             httpContext.Response.StatusCode = (int)statusCode;
-            httpContext.Response.ContentType = "application/json";
 
-            var result = Result.Failure(message, statusCode);
-
-            await httpContext.Response.WriteAsJsonAsync(result, cancellationToken);
+            await httpContext.Response.WriteAsJsonAsync(new
+            {
+                Code = (int)statusCode,
+                Status = statusCode.ToString(),
+                Message = exception.Message
+            },
+            cancellationToken);
 
             return true;
         }
