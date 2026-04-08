@@ -8,6 +8,7 @@ namespace MiniClinicManagementSystem.Services.DependencyInjection
 		public static IServiceCollection AddServices(this IServiceCollection services)
 		{
 			services.AddScoped<IAvailabilitySlotService, AvailabilitySlotService>();
+			services.AddScoped<IDoctorServices, DoctorService>();
 			return services;
 		}
 	}
