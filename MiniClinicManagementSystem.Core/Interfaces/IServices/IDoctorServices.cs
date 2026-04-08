@@ -3,7 +3,7 @@ using MiniClinicManagementSystem.Core.Interfaces.IRepository;
 
 namespace MiniClinicManagementSystem.Core.Interfaces.IServices
 {
-	public interface IDoctorAvailabilityService : IGenericRepository<Doctor>
+	public interface IDoctorServices : IGenericRepository<Doctor>
 	{
 	}
 }
