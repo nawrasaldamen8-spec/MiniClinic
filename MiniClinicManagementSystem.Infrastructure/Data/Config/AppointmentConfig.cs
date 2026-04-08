@@ -25,12 +25,12 @@ namespace MiniClinicManagementSystem.Infrastructure.Data.Config
                 .IsRequired(false);
 
 
-            builder.HasOne(x => x.PatientProfile)
+            builder.HasOne(x => x.Patient)
                    .WithMany(x => x.Appointments)
                    .HasForeignKey(x => x.PatientId)
                    .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(x => x.DoctorProfile)
+            builder.HasOne(x => x.Doctor)
                    .WithMany(x => x.Appointments)
                    .HasForeignKey(x => x.DoctorId)
                    .OnDelete(DeleteBehavior.Restrict);

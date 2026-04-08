@@ -1,5 +1,4 @@
 ﻿using MiniClinicManagementSystem.Core.Enums;
-using System.Numerics;
 
 namespace MiniClinicManagementSystem.Core.Entities
 {
@@ -12,8 +11,8 @@ namespace MiniClinicManagementSystem.Core.Entities
 		public AppointmentStatus AppointmentStatus { get; set; }
 		public string? Notes { get; set; }
 
-		public Patient PatientProfile { get; set; } = null!;
-		public Doctor DoctorProfile { get; set; } = null!;
+		public Patient Patient { get; set; } = null!;
+		public Doctor Doctor { get; set; } = null!;
 
 		public ICollection<Prescription> Prescriptions { get; set; } = [];
 		public Review? Review { get; set; }
