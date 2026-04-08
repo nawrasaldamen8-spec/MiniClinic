@@ -11,7 +11,8 @@ namespace MiniClinicManagementSystem.Infrastructure.DependencyInjection
 			services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 			services.AddScoped<IDoctorRepository, DoctorRepository>();
 			services.AddScoped<IAvailabilitySlotRepository, AvailabliltySlotRepository>();
-			return services;
+			services.AddScoped<IPatientRepository, PatientRepository>();
+            return services;
 		}
 	}
 }
