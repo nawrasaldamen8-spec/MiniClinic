@@ -1,10 +1,16 @@
+/*
+ * [ORCHESTRATOR] Program.cs
+ * This file connects all layers: Core, Services, and Infrastructure.
+ * Clean Architecture Note: The API project depends on all other layers to perform Dependency Injection.
+ */
 using FluentValidation;
 using FluentValidation.AspNetCore;
+// ... (rest of implementation)
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MiniClinicManagementSystem.API.Handlers;
 using MiniClinicManagementSystem.Core.Entities;
-using MiniClinicManagementSystem.Core.Validations;
+using MiniClinicManagementSystem.Core.Validations.AvailablititySlotValidation;
 using MiniClinicManagementSystem.Infrastructure.Data;
 using MiniClinicManagementSystem.Infrastructure.DependencyInjection;
 using MiniClinicManagementSystem.Services.DependencyInjection;

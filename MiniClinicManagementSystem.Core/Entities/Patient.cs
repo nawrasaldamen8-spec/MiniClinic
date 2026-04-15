@@ -1,13 +1,13 @@
-﻿namespace MiniClinicManagementSystem.Core.Entities
+namespace MiniClinicManagementSystem.Core.Entities
 {
 	public class Patient
 	{
 		public int Id { get; set; }
-		public required string ApplicationUserId { get; set; }
+		public int PersonId { get; set; }
 		public DateTime DateOfBirth { get; set; }
-		public string Address { get; set; } = string.Empty;
+		public string? Address { get; set; }
 
-		public ApplicationUser ApplicationUser { get; set; } = null!;
+		public Person Person { get; set; } = null!;
 		public ICollection<Appointment> Appointments { get; set; } = [];
 	}
 }

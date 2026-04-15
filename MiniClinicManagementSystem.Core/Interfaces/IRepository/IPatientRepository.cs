@@ -1,4 +1,5 @@
-﻿using MiniClinicManagementSystem.Core.Entities;
+﻿using MiniClinicManagementSystem.Core.DTOs.PatientDTOs;
+using MiniClinicManagementSystem.Core.Entities;
 
 namespace MiniClinicManagementSystem.Core.Interfaces.IRepository
 {
@@ -10,5 +11,8 @@ namespace MiniClinicManagementSystem.Core.Interfaces.IRepository
     /// underlying data store.</remarks>
     public interface IPatientRepository : IGenericRepository<Patient>
     {
+        Task<bool> ExistsByEmailAsync(string email);
+        Task<Patient?> GetPatientWithDetailsByIdAsync(int patientId);
+        Task<Patient?> GetPatientDetailsByIdAsync(int patientId);
     }
 }

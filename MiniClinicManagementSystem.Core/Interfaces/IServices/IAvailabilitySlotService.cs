@@ -15,5 +15,5 @@ namespace MiniClinicManagementSystem.Core.Interfaces.IServices
 
 	}
 
-    
+
 }

@@ -12,6 +12,9 @@ namespace MiniClinicManagementSystem.Infrastructure.DependencyInjection
 			services.AddScoped<IDoctorRepository, DoctorRepository>();
 			services.AddScoped<IAvailabilitySlotRepository, AvailabliltySlotRepository>();
 			services.AddScoped<IPatientRepository, PatientRepository>();
+			services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+			services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+
             return services;
 		}
 	}

@@ -1,13 +1,16 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using MiniClinicManagementSystem.Core.DTOs.AvailabilitySlotDTOs;
 
-namespace MiniClinicManagementSystem.Core.Validations
+namespace MiniClinicManagementSystem.Core.Validations.AvailablititySlotValidation
 {
-    public class CreateAvailabilitySlotValidator : AbstractValidator<CreateAvailabilitySlotDTO>
+    public class UpdateAvailabilitySlotValidator : AbstractValidator<UpdateAvailabilitySlotDTO>
     {
-        public CreateAvailabilitySlotValidator()
+        public UpdateAvailabilitySlotValidator()
         {
+            RuleFor(x => x.Id)
+                .NotEmpty().WithMessage("Availability slot is required.")
+                .GreaterThan(0).WithMessage("Invalid availability slot.");
+
             RuleFor(x => x.DoctorId)
                 .NotEmpty().WithMessage("Doctor ID is required.")
                 .GreaterThan(0)

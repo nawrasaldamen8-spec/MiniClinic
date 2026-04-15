@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MiniClinicManagementSystem.Core\MiniClinicManagementSystem.Core.csproj" />
     <ProjectReference Include="..\MiniClinicManagementSystem.Services\MiniClinicManagementSystem.Services.csproj" />
+    <ProjectReference Include="..\MiniClinicManagementSystem.Infrastructure\MiniClinicManagementSystem.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MiniClinicManagementSystem.Core.Entities;
 
@@ -8,7 +8,7 @@ namespace MiniClinicManagementSystem.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Doctor> builder)
         {
-            builder.ToTable("DoctorProfiles");
+            builder.ToTable("Doctors");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Specialization)
                 .HasConversion<string>()
@@ -24,12 +24,12 @@ namespace MiniClinicManagementSystem.Infrastructure.Data.Config
                 .HasColumnType("decimal(18,2)")
                 .IsRequired();
           
-            builder.HasOne(x => x.ApplicationUser)
-                   .WithOne()
-                   .HasForeignKey<Doctor>(x => x.ApplicationUserId)
-                   .OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.Person)
+                   .WithOne(x => x.Doctor)
+                   .HasForeignKey<Doctor>(x => x.PersonId)
+                   .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasIndex(x => x.ApplicationUserId)
+            builder.HasIndex(x => x.PersonId)
                 .IsUnique();
         }
     }

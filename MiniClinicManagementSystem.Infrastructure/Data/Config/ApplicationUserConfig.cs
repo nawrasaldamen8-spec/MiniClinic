@@ -14,6 +14,10 @@ namespace MiniClinicManagementSystem.Infrastructure.Data.Config
                 .HasColumnType("datetime2")
                 .IsRequired();
 
+            builder.HasOne(x => x.Person)
+                .WithOne(x => x.ApplicationUser)
+                .HasForeignKey<Person>(x => x.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

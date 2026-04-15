@@ -9,7 +9,10 @@ namespace MiniClinicManagementSystem.Services.DependencyInjection
 		{
 			services.AddScoped<IAvailabilitySlotService, AvailabilitySlotService>();
 			services.AddScoped<IDoctorServices, DoctorService>();
-			services.AddScoped<IPatientService, PatientSerivce>();
+			services.AddScoped<IPatientService, PatientService>();
+			services.AddScoped<IAppointmentService, AppointmentService>();
+			services.AddScoped<IPrescriptionService, PrescriptionService>();
+            services.AddScoped<IIdentityService, IdentityService>();
             return services;
 			
 		}

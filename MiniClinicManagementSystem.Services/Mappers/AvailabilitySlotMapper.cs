@@ -14,7 +14,7 @@ namespace MiniClinicManagementSystem.Services.Mappers
 				DoctorId = x.DoctorId,
 				EndTime = x.EndTime,
 				StartTime = x.StartTime,
-				DoctorName = x.DoctorProfile.ApplicationUser.UserName ?? "",
+				DoctorName = x.DoctorProfile.Person.ApplicationUser.UserName ?? "",
 			});
 		}
 	}

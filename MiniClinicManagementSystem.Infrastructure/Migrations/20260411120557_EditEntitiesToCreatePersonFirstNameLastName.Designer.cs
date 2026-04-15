@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MiniClinicManagementSystem.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using MiniClinicManagementSystem.Infrastructure.Data;
 namespace MiniClinicManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260411120557_EditEntitiesToCreatePersonFirstNameLastName")]
+    partial class EditEntitiesToCreatePersonFirstNameLastName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -540,7 +543,7 @@ namespace MiniClinicManagementSystem.Infrastructure.Migrations
             modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.Person", b =>
                 {
                     b.HasOne("MiniClinicManagementSystem.Core.Entities.ApplicationUser", "ApplicationUser")
-                        .WithOne("Person")
+                        .WithOne()
                         .HasForeignKey("MiniClinicManagementSystem.Core.Entities.Person", "ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -568,12 +571,6 @@ namespace MiniClinicManagementSystem.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Appointment");
-                });
-
-            modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.ApplicationUser", b =>
-                {
-                    b.Navigation("Person")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("MiniClinicManagementSystem.Core.Entities.Appointment", b =>

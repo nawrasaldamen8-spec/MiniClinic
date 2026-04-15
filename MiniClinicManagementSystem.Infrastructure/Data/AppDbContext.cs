@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,8 +9,9 @@ namespace MiniClinicManagementSystem.Infrastructure.Data
 	public class AppDbContext(DbContextOptions<AppDbContext> options)
 		: IdentityDbContext<ApplicationUser>(options)
 	{
-		public DbSet<Doctor> DoctorProfiles { get; set; }
-		public DbSet<Patient> PatientProfiles { get; set; }
+		public DbSet<Person> People { get; set; }
+		public DbSet<Doctor> Doctors { get; set; }
+		public DbSet<Patient> Patients { get; set; }
 		public DbSet<Appointment> Appointments { get; set; }
 		public DbSet<Prescription> Prescriptions { get; set; }
 		public DbSet<Review> Reviews { get; set; }
@@ -50,7 +51,7 @@ namespace MiniClinicManagementSystem.Infrastructure.Data
 			}
 
 			// Doctor Account
-			if (!context.DoctorProfiles.Any())
+			if (!context.Doctors.Any())
 			{
 				var user = new ApplicationUser
 				{
@@ -70,16 +71,26 @@ namespace MiniClinicManagementSystem.Infrastructure.Data
 					throw new Exception("Failed to assign doctor role: " + string.Join(", ", role.Errors.Select(e => e.Description)));
 				}
 
+				// Create Person Record
+				var person = new Person
+				{
+					FirstName = "Issa",
+					LastName = "Ahmad",
+					ApplicationUserId = user.Id
+				};
+				context.People.Add(person);
+				await context.SaveChangesAsync();
+
 				var doctor = new Doctor
 				{
-					ApplicationUserId = user.Id,
+					PersonId = person.Id,
 					Specialization = Core.Enums.Specialization.Cardiology,
 					YearsOfExperience = 10,
 					ConsultationFee = 100m,
 					Bio = "Experienced cardiologist with a passion for patient care."
 				};
 
-				context.DoctorProfiles.Add(doctor);
+				context.Doctors.Add(doctor);
 				await context.SaveChangesAsync();
 			}
 		}
